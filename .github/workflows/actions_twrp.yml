@@ -1,0 +1,54 @@
+name: ACTIONS_BUILD_TWRP
+
+# Actions TWRP Builder for ginkgo
+
+on:
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    
+    - name: Clean Up
+      run: |
+        docker rmi `docker images -q`
+        sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+        sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+        sudo -E apt-get update
+        sudo -E apt-get -y autoremove --purge
+        sudo -E apt-get clean 
+
+    - name: Environment Setting up
+      run: |
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install git libncurses5 -y
+        git config --global user.name "WhiteMouseHuang"
+        git config --global user.email "whitemouse2005@163.com"
+        sudo apt-get install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip -y
+
+
+    - name: Syncing Work Tree
+      run : |
+        repo init --depth=1 -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
+        repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+        git clone -- depth=1 https://github.com/WhiteMouseHuang/android_device_xiaomi_ginkgo.git -b android-9.0 device/xiaomi/ginkgo
+
+    - name: Building Recovery Image
+      run : |
+        . build/envsetup.sh
+        export ALLOW_MISSING_DEPENDENCIES=true
+        lunch omni_ginkgo-eng
+        mka recoveryimage -j$(nproc --all)
+        mv $OUT/recovery.img ./recovery.img
+
+    - name: Upload TWRP 
+      uses: actions/upload-artifact@master
+      with: 
+       name: TWRP
+       path: recovery.img
