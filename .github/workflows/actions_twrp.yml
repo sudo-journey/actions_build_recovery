@@ -36,15 +36,18 @@ jobs:
       run: |
         mkdir ~/bin
         curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        echo "Downloaded repo"
         chmod a+x ~/bin/repo
         PATH=~/bin:$PATH
         mkdir workspace
         cd workspace
+        echo "The workspace is ready!"
 
 
     - name: Syncing Work Tree
       run : |
         PATH=~/bin:$PATH
+        echo "Setting up PATH"
         repo init --depth=1 -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
         repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
         git clone -- depth=1 https://github.com/WhiteMouseHuang/android_device_xiaomi_ginkgo.git -b android-9.0 device/xiaomi/ginkgo
