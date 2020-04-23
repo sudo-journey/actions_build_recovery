@@ -30,7 +30,7 @@ jobs:
         sudo apt install git libncurses5 -y
         git config --global user.name "WhiteMouseHuang"
         git config --global user.email "whitemouse2005@163.com"
-        sudo apt-get install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip -y
+        sudo apt-get install repo git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip -y
 
 
     - name: Syncing Work Tree
