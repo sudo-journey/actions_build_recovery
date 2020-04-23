@@ -44,6 +44,7 @@ jobs:
 
     - name: Syncing Work Tree
       run : |
+        PATH=~/bin:$PATH
         repo init --depth=1 -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
         repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
         git clone -- depth=1 https://github.com/WhiteMouseHuang/android_device_xiaomi_ginkgo.git -b android-9.0 device/xiaomi/ginkgo
