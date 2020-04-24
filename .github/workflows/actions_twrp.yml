@@ -66,4 +66,4 @@ jobs:
       uses: actions/upload-artifact@master
       with: 
        name: TWRP
-       path: workspace/recovery.img
+       path: recovery.img
