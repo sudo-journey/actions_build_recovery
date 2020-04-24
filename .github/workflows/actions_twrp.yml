@@ -50,7 +50,7 @@ jobs:
         echo "Setting up PATH"
         git config --global user.name "WhiteMouseHuang"
         git config --global user.email "whitemouse2005@163.com"
-        repo init --depth=1 -u git@gitlab.com:OrangeFox/Manifest.git -b fox_9.0
+        repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
         repo sync -c -j$(nproc --all) --force-sync
         git clone -- depth=1 https://github.com/WhiteMouseHuang/android_device_xiaomi_ginkgo.git -b android-9.0 device/xiaomi/ginkgo
 
