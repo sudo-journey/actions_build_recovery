@@ -53,6 +53,9 @@ jobs:
         repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
         repo sync -c -j$(nproc --all) --force-sync
         git clone --depth=1 https://github.com/WhiteMouseHuang/twrp_device_huawei_kiwi.git -b android-9.0 device/huawei/kiwi
+        # Fix busybox
+        # Thanks at @Pinkdoge
+        git clone https://github.com/TeamWin/android_external_busybox/ -b android-9.0 external/busybox
 
     - name: Building Recovery Image
       run : |
