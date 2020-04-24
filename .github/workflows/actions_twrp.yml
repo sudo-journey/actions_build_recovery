@@ -52,13 +52,13 @@ jobs:
         git config --global user.email "whitemouse2005@163.com"
         repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
         repo sync -c -j$(nproc --all) --force-sync
-        git clone --depth=1 https://github.com/WhiteMouseHuang/android_device_xiaomi_ginkgo.git -b android-9.0 device/xiaomi/ginkgo
+        git clone --depth=1 https://github.com/WhiteMouseHuang/twrp_device_huawei_kiwi.git -b android-9.0 device/huawei/kiwi
 
     - name: Building Recovery Image
       run : |
         . build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch omni_ginkgo-eng
+        lunch omni_kiwi-eng
         mka recoveryimage -j$(nproc --all)
         mv $OUT/recovery.img ./recovery.img
 
